@@ -16,23 +16,26 @@ const CharacterList = () => {
         console.log(apiURL);
 
         const response = await fetch(`${API_URL}/characters?platform=${selectedPlatform}`);
-
-        console.log(response); // Log the response to see its contents
+        console.log('Selected Platform:', selectedPlatform); // Add this line
+        console.log('API Response:', response); // Add this line
+        console.log('API Response:', response);
 
         if (!response.ok) {
           throw new Error('Failed to fetch character data');
         }
 
         const data = await response.json();
-        console.log(data); // Log the data to see its contents
+        console.log('Data:', data);
         setCharacters(data);
       } catch (error) {
         setError(error.message || 'An error occurred');
       }
     };
-
+    console.log('Selected Platform:', selectedPlatform); // Log the selected platform
     fetchCharacters();
   }, [selectedPlatform]); // This effect will run whenever `selectedPlatform` changes
+
+  console.log('Characters:', characters); // Log the characters array
 
   return (
     <div>
@@ -44,13 +47,18 @@ const CharacterList = () => {
         <div>
           {/* Your character list rendering using the `characters` state */}
           {characters.map((character) => (
-            <div key={character.character}>
-              <p>Platform: {character.platform}</p>
-              <h2>{character.character}</h2>
-              <p>Show {character.show}</p>
-              <p>Gender: {character.gender}</p>
-              <p>Studio: {character.studio}</p>
-              <p>Respresentation: {character.representation}</p>
+            <div key={character.character || 'No data to show'}>
+              <h2>Character Name: {character.character || 'No data to show'}</h2>
+              <p>Platform: {character.platform || 'No data to show'}</p>
+              <p>Show {character.show || 'No data to show'}</p>
+              <p>Gender: {character.gender || 'No data to show'}</p>
+              <p>Studio: {character.studio || 'No data to show'}</p>
+              <p>Role: {character.role || 'No data to show'}</p>
+              <p>Orientation: {character.orientation || 'No data to show'}</p>
+              <p>Diversability: {character.disability || 'No data to show'} </p>
+              <p>Studio: {character.studio || 'No data to show'} </p>
+              <p>Confirmed by: {character.confirmation || 'No data to show'} </p>
+              <p>Diversability: {character.disability || 'No data to show'} </p>
               {/* Render character details here */}
             </div>
           ))}
